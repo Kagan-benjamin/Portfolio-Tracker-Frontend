@@ -2,10 +2,10 @@ import React from 'react';
 import './styling/App.css';
 import history from './utilities/history.js';
 import { Router, Route, Switch } from "react-router-dom";
-import NavBar from './components/NavBar.js'
-import HomePage from './components/HomePage.js'
-import MyPortfolios from './components/MyPortfolios.js'
-import ShowPage from './components/ShowPage.js'
+import NavBar from './containers/NavBar.js'
+import HomePage from './containers/HomePage.js'
+import MyPortfolios from './containers/MyPortfolios.js'
+import ShowPage from './containers/ShowPage.js'
 
 class App extends React.Component {
 
