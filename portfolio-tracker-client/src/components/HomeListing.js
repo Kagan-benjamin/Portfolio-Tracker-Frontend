@@ -1,4 +1,5 @@
 import React from "react"
+import '../styling/HomeIndex.css';
 
 const divGreen = { color: 'green' };
 const divRed = { color: 'red' };

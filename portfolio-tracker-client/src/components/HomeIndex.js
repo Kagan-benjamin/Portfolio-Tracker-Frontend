@@ -1,5 +1,6 @@
 import React from 'react';
 import HomeListing from './HomeListing.js';
+import '../styling/HomeIndex.css';
 const API_KEY = "baf3ec0ef6msh64ec318991109bfp13cd0cjsn50b9c68a5706"
 const region = "US", lang = "en";
 const symbols = "MSFT";
