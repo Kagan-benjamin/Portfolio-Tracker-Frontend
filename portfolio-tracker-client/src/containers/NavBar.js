@@ -22,7 +22,9 @@ class NavBar extends React.Component {
           <Grommet theme={grommet}>
               <Header background="dark-2" pad="medium">
                 <Box direction="row" align="center" gap="small">
-                 <img src={CoronaQuest} style={{width: 50+ '%'}}></img>
+                <Link to="/">
+                 <img src={CoronaQuest} align="left" style={{width: 50+ '%'}}></img>
+                </Link>
                 </Box>
                 <Nav direction="row">
                 <div>
