@@ -1,5 +1,7 @@
 import React from 'react';
 import NavBar from './NavBar.js'
+import PortIndex from '../components/PortIndex.js'
+import PortSearch from '../components/PortSearch.js'
 
 class MyPortfolios extends React.Component {
 
@@ -7,7 +9,8 @@ class MyPortfolios extends React.Component {
         return (
             <div className="my-portfolios">
                 <NavBar />
-                portfoliooooos
+                <PortSearch />
+                <PortIndex />
             </div>
         );
     }

@@ -1,0 +1,17 @@
+.Homepage {
+    position: relative;
+    background-position: center;
+    text-align: left;
+}
+
+.Portindex {
+    position: relative;
+    background-position: center;
+    text-align: center;
+    font-size: 150%;
+}
+
+.index-search {
+    position: relative;
+    text-align: center;
+}

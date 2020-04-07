@@ -6,6 +6,7 @@ import NavBar from './containers/NavBar.js'
 import HomePage from './containers/HomePage.js'
 import MyPortfolios from './containers/MyPortfolios.js'
 import ShowPage from './containers/ShowPage.js'
+import Login from './containers/Login.js'
 
 class App extends React.Component {
 
@@ -23,6 +24,8 @@ class App extends React.Component {
           render={(props) => <MyPortfolios {...props} /> } />
           <Route exact path="/showpage"
           render={(props) => <ShowPage {...props} /> } />
+          <Route exact path="/login"
+          render={(props) => <Login {...props} /> } />
         </Switch>
       </Router>
       </div>

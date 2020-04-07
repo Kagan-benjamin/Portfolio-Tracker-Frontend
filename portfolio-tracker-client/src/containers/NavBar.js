@@ -1,9 +1,9 @@
 import React from 'react';
-import styled, { keyframes } from "styled-components"
+import styled from "styled-components"
 import { Box, Grommet, Nav, Header } from "grommet";
 import { grommet } from "grommet/themes";
 import { Link } from "react-router-dom";
-import CoronaQuest from '../artwork/CoronaQuest.png'
+import PortfolioTracker from '../artwork/PortfolioTracker.png'
 
 class NavBar extends React.Component {
 
@@ -23,7 +23,7 @@ class NavBar extends React.Component {
               <Header background="dark-2" pad="medium">
                 <Box direction="row" align="center" gap="small">
                 <Link to="/">
-                 <img src={CoronaQuest} align="left" style={{width: 50+ '%'}}></img>
+                 <img src={PortfolioTracker} alt="portfolio tracker" align="left" style={{width: 50+ '%'}}></img>
                 </Link>
                 </Box>
                 <Nav direction="row">
