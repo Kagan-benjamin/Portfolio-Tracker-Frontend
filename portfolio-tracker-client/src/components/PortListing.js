@@ -4,7 +4,7 @@ import '../styling/HomeIndex.css';
 const divGreen = { color: 'green' };
 const divRed = { color: 'red' };
 
-class HomeListing extends React.Component {
+class PortListing extends React.Component {
 
     handlePriceRounding = (price) => {
         let roundPrice = price.toFixed(2);
@@ -52,11 +52,11 @@ class HomeListing extends React.Component {
   render() {
     return (
     <tr>
-      <td>{this.props.symbol}</td>
-      <td>{this.props.shortName}</td>
-      <td>{this.handlePriceRounding(this.props.regularMarketPrice)}</td>
+       <td>{this.props.symbol}</td>
+       <td>{this.props.shortName}</td> 
+      {/* <td>{this.handlePriceRounding(this.props.regularMarketPrice)}</td>
       <td>{this.handlePerfChangeColor(this.props.regularMarketChange)}</td>
-      <td>{this.handlePerfPercentColor(this.props.regularMarketChangePercent)}</td>
+      <td>{this.handlePerfPercentColor(this.props.regularMarketChangePercent)}</td> */} */}
       {/* <td><button 
       type="button" 
       className="btn btn-primary"
@@ -73,4 +73,4 @@ class HomeListing extends React.Component {
   }
 }
 
-export default HomeListing
+export default PortListing
