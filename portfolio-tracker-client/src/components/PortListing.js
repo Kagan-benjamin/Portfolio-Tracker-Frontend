@@ -54,20 +54,9 @@ class PortListing extends React.Component {
     <tr>
        <td>{this.props.symbol}</td>
        <td>{this.props.shortName}</td> 
-      {/* <td>{this.handlePriceRounding(this.props.regularMarketPrice)}</td>
-      <td>{this.handlePerfChangeColor(this.props.regularMarketChange)}</td>
-      <td>{this.handlePerfPercentColor(this.props.regularMarketChangePercent)}</td> */} */}
-      {/* <td><button 
-      type="button" 
-      className="btn btn-primary"
-    //   onClick={this.props.handleClick}
- //     value={this.props.pizza}
- //     datatopping={this.props.pizza.topping}
- //     datasize={this.props.pizza.size}
- //     dataveg={pizzaVeg}
- //     datakey={this.props.pizza.id}
-        >
-        Show</button></td>  */}
+       <td>{this.handlePriceRounding(this.props.regularMarketPrice)}</td>
+       <td>{this.handlePerfChangeColor(this.props.regularMarketChange)}</td>
+       <td>{this.handlePerfPercentColor(this.props.regularMarketChangePercent)}</td>
     </tr>
     )
   }

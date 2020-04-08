@@ -13,7 +13,7 @@ class HomeIndex extends React.Component {
     }
 
     fetchStocks() {
-        fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-quotes?region=US&lang=en&symbols=MSFT%252CAAPL%252CAMZN%252CFB%252CJNJ%252CINTC%252CGOOG%252CPG%252CJPM%252CV%252CGILD", {
+        fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-quotes?region=US&lang=en&symbols=MSFT%252CAAPL%252CAMZN%252CFB%252CJNJ%252CGOOG%252CV%252CJPM%252CPG%252CINTC%252CVZ%252CUNH%252CMA%252CT%252CHD%252CMRK%252CPFE%252CDIS%252CPEP%252CKO%252CBAC%252CXOM%252CWMT%252CCSCO%252CCMCSA%252CNFLX%252CNVDA%252CCVX%252CADBE%252CABT%252CCOST%252CBMY%252CMCD%252CCRM%252CMDT%252CAMGN%252CLLY%252CTMO%252CPYPL%252CPM%252CNEE%252CABBV%252CWFC%252CORCL%252CNKE%252CACN%252CIBM%252CUNP", {
 	    "method": "GET",
 	    "headers": {
 		    "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
@@ -47,19 +47,8 @@ class HomeIndex extends React.Component {
                     <tbody>
                         {currentStocks.map(stock => (
                             <HomeListing key={stock.id} {...stock}
-                            />)
-                        )    
-                        }
-
-                        {/* <tr>
-                            <td>{this.state.MSFT.sector}</td>
-                            <td>{this.state.MSFT.ticker}</td>
-                            <td>{this.state.MSFT.name}</td>
-                            <td>${this.state.MSFT.price}</td>
-                            <td>{this.handlePerfChangeColor(this.state.MSFT.perfChange)}</td>
-                            <td>{this.handlePerfPercentColor(this.state.MSFT.perfPercent)}</td>
-                        </tr> */}
-
+                            />
+                        ))}
                     </tbody>
                 </table>
             </div>

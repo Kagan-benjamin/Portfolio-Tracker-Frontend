@@ -1,7 +1,11 @@
 import React from 'react';
 import PortListing from './PortListing.js';
+import PortAllocation from './PortAllocation.js';
 import '../styling/PortIndex.css';
 let API_URL = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-quotes?region=US&lang=en&symbols="
+
+const divGreen = { color: 'green' };
+const divRed = { color: 'red' };
 
 class PortIndex extends React.Component {
 
@@ -9,7 +13,11 @@ class PortIndex extends React.Component {
         portfolioStocks: [],    // portfolios
         stockIndex: [],         // stock objects
         currentTickers: [],     // current tickers for API pull
-        portIndex: []           // stock objects inc from API
+        portIndex: [],           // stock objects inc from API
+        allocation: [],
+        portName: '',
+        portPerformance: 0,
+        allocationObj: []
     }
 
                     // Lifecycle //
@@ -22,6 +30,7 @@ class PortIndex extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if (this.state.currentTickers !== prevState.currentTickers) {
             this.fetchIndex()
+            // this.getName()
         } if (this.state.portIndex !== prevState.portIndex) {
 
         }
@@ -60,7 +69,9 @@ class PortIndex extends React.Component {
 
     showPortfolio = (portfolioStocks) => {
         let showStocks = []
-        let stockIds = portfolioStocks[1].portfoliostocks.map(showStock => showStock.stock_id)
+        let portName = portfolioStocks[0].name 
+        let stockIds = portfolioStocks[0].portfoliostocks.map(showStock => showStock.stock_id)
+        let stockAllocations = portfolioStocks[0].portfoliostocks.map(showStock => showStock.allocation)
         let index = this.state.stockIndex
         stockIds.forEach(stockId => index.forEach(stock => {
             if (stockId === stock.id) {
@@ -68,9 +79,24 @@ class PortIndex extends React.Component {
             }
         } ))
         this.setState({
-            currentTickers: showStocks
-        })
+            currentTickers: showStocks,
+            allocation: stockAllocations,
+            portName: portName
+        }, () => this.setAllocations() )
     }
+
+    setAllocations = () => {
+        let allocationObj = []
+        let allocations = this.state.allocation
+        allocations.forEach(allocation => {
+            allocationObj.push({allocation})
+        })
+        this.setState({
+            allocationObj: allocationObj
+        }, () => console.log(this.state.allocationObj))
+    }
+
+ 
    
             // Interpolate CurrentTickers within API url
 
@@ -80,7 +106,6 @@ class PortIndex extends React.Component {
         portIndex.forEach(ticker => {
             reqString += ticker + '%252C'
         })
-        console.log(reqString)
         let fetch_URL = API_URL + reqString 
         return fetch_URL
     }
@@ -104,20 +129,76 @@ class PortIndex extends React.Component {
         }
     }
 
-        setPortIndex = (stocks) => {
-            this.setState({
-            portIndex: stocks
-        }, () => {})
+    setPortIndex = (stocks) => {
+        this.setState({
+        portIndex: stocks
+        }, () => this.setPercentChange(stocks))
     }
 
-   
+    setPercentChange = (stocksInc) => {            // ACCESS IS HERE
+        let stocks = stocksInc 
+        let allocations = this.state.allocation
+        let percentChangeArray = []
+        let allocationArray = []
+        
+        stocks.forEach(stock => {
+            percentChangeArray.push(stock.regularMarketChangePercent/100)
+        })
+        allocations.forEach(allocation => {
+            allocationArray.push(allocation/100)
+        })
+        console.log(allocationArray)
+        console.log(percentChangeArray)
+        
+        let i = 0
+        let end = allocationArray.length - 1
+        let calcArray = []
 
-   
+        allocationArray.forEach(allocation => {
+            if (i === 0) {
+                let mult = allocation * percentChangeArray[0]
+                calcArray.push(mult)
+                i++
+            } if ( i > 0 && i <= end ) {
+                let mult = allocation * percentChangeArray[i]
+                calcArray.push(mult)
+                i++
+            }
+        })
+        let arraySum = calcArray.reduce((a,b) => a + b, 0)
+        let portPercentChange = arraySum * 100
+        let finalChange = portPercentChange.toFixed(2) 
+        this.setState({
+            portPerformance: finalChange
+        }, () => console.log(this.state.portPerformance))
+    }
+ 
+                // Further Functionality //
+
+    handlePerfPercentColor = (perfPercent) => {
+        if (perfPercent > 0) {
+            return (
+                <div style={divGreen}>+{perfPercent}%</div>
+            )
+        } if (perfPercent < 0) {
+            return (
+                <div style={divRed}>{perfPercent}%</div>
+            )
+        } else {
+            return (
+                <div>{perfPercent}%</div>
+            )
+        }
+    }
+
 
     render() {
         let currentStocks = this.state.portIndex
+        let currentAllocation = this.state.allocationObj
         return (
             <div className="Portindex">
+                <h3>{this.state.portName}</h3>
+                <h4>Portfolio Daily Performance: {this.handlePerfPercentColor(this.state.portPerformance)}</h4>
                 <table className="Portindex-table">
                 <thead>
                 <tr>
@@ -126,14 +207,26 @@ class PortIndex extends React.Component {
                     <th scope="col">Current Price:</th>
                     <th scope="col">Daily $ Perf:</th>
                     <th scope="col">Daily % Perf:</th>
-                    <th scope="col">Allocation %:</th>
                 </tr>
                 </thead>
                     <tbody>
                         {currentStocks.map(stock => (
                             <PortListing key={stock.id} {...stock}
-                            />))    
-                        }
+                            />
+                        ))}
+                    </tbody>
+                </table>
+                <table className="allocation-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Allocation %:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentAllocation.map(allocation => (
+                            <PortAllocation key={allocation.id} {...allocation}
+                            />
+                        ))}
                     </tbody>
                 </table>
             </div>
