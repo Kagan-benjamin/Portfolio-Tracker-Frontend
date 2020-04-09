@@ -8,7 +8,9 @@ class HomePage extends React.Component {
     render() {
         return (
             <div className="Homepage">
-                <NavBar />
+                <NavBar username={this.props.username} 
+                noUser={this.props.noUser}
+                />
                 <IndexSearch />
                 <HomeIndex />
             </div>

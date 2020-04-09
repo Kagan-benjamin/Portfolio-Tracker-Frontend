@@ -69,9 +69,9 @@ class PortIndex extends React.Component {
 
     showPortfolio = (portfolioStocks) => {
         let showStocks = []
-        let portName = portfolioStocks[0].name 
-        let stockIds = portfolioStocks[0].portfoliostocks.map(showStock => showStock.stock_id)
-        let stockAllocations = portfolioStocks[0].portfoliostocks.map(showStock => showStock.allocation)
+        let portName = portfolioStocks[1].name 
+        let stockIds = portfolioStocks[1].portfoliostocks.map(showStock => showStock.stock_id)
+        let stockAllocations = portfolioStocks[1].portfoliostocks.map(showStock => showStock.allocation)
         let index = this.state.stockIndex
         stockIds.forEach(stockId => index.forEach(stock => {
             if (stockId === stock.id) {
