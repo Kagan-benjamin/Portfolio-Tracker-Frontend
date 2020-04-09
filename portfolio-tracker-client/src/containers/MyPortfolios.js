@@ -8,7 +8,9 @@ class MyPortfolios extends React.Component {
     render() {
         return (
             <div className="my-portfolios">
-                <NavBar />
+                <NavBar username={this.props.username} 
+                noUser={this.props.noUser}
+                />
                 <PortSearch />
                 <PortIndex />
             </div>

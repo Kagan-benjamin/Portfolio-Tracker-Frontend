@@ -2,6 +2,7 @@ import React from 'react';
 import HomeListing from './HomeListing.js';
 import '../styling/HomeIndex.css';
 
+
 class HomeIndex extends React.Component {
 
     state = {
