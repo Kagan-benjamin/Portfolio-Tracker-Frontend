@@ -12,6 +12,7 @@ class App extends React.Component {
 
   state =  {
     username: '',
+    user_id: null,
     users: []
   }
 
@@ -28,25 +29,25 @@ class App extends React.Component {
   setUsers = (users) => {
     this.setState({
         users: users
-    }, () => console.log(this.state.users))
+    })
 }
 
   handleLogin = e => {
     e.preventDefault()
-    let correctArray = []
-    // console.log(e.target[0].value, e.target[1].value)
+    let correctToggle = false
     let users = this.state.users
     users.forEach(user => {
-      if (user.username === e.target[0].value && user.password == e.target[1].value) {
-        correctArray.push(user)
+      if (user.username === e.target[0].value && user.password === e.target[1].value) {
+        correctToggle = !correctToggle
         this.setState({
-          username: e.target[0].value
+          username: e.target[0].value,
+          user_id: user.id
         }, () => this.loginRedirect())
       } else {
         return
       }
     })
-    if (correctArray.length === 0) {
+    if (correctToggle === false) {
       console.log("Sorry, wrong username or password")
     } 
   }
@@ -62,7 +63,8 @@ class App extends React.Component {
 
   signOut = () => {
     this.setState({
-      username: ''
+      username: '',
+      user_id: null
     })
   }
 
@@ -106,11 +108,9 @@ class App extends React.Component {
           noUser={this.noUser}
           /> } />
           
-          {/* <Route exact path="/navbar"
-          render={(props) => <NavBar {...props} />} /> */}
-          
           <Route exact path="/myportfolios"
           render={(props) => <MyPortfolios {...props} username={this.state.username} 
+          userId={this.state.user_id} 
           noUser={this.noUser}
           /> } />
 

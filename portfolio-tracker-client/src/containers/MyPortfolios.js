@@ -5,14 +5,33 @@ import PortSearch from '../components/PortSearch.js'
 
 class MyPortfolios extends React.Component {
 
+    state = {
+        currentPorts: [],
+        user_id:  null
+    }
+
+    componentDidMount() {
+        this.setUser(this.props.userId)
+    }
+
+    setUser = user => {
+        this.setState({
+            user_id: user
+        }, () => console.log(this.state.user_id))
+    }
+
     render() {
         return (
             <div className="my-portfolios">
                 <NavBar username={this.props.username} 
                 noUser={this.props.noUser}
                 />
-                <PortSearch />
-                <PortIndex />
+                {/* <PortSearch userId={this.props.userId} 
+                userPorts={this.props.userPorts}
+                /> */}
+                <PortIndex userId={this.props.userId} 
+                
+                />
             </div>
         );
     }

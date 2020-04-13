@@ -17,6 +17,14 @@ class Login extends React.Component {
         this.setState({ loginPassword: e.target.value })
     }
 
+    handleLoginSubmit = e => {
+        this.props.handleLogin(e)
+        this.setState({
+            loginName: '',
+            loginPassword: ''
+        })
+    }
+
     render() {
         
         const Button = styled.button`
@@ -41,7 +49,7 @@ class Login extends React.Component {
                 </div>
                 <div style={{textAlign: "center"}}>
                     
-                    <form onSubmit={(e) => {this.props.handleLogin(e)}}>
+                    <form onSubmit={(e) => {this.handleLoginSubmit(e)}}>
                         
                         <label style={{fontSize: "30px"}}>
                         Username:

@@ -15,3 +15,9 @@
     position: relative;
     text-align: center;
 }
+
+.port-username {
+    position: relative;
+    text-align: left;
+    margin: 2px;
+}

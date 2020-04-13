@@ -3,7 +3,9 @@ import '../styling/HomeIndex.css';
 
 class IndexSearch extends React.Component {
 
-    refreshPage = () => {
+    refreshPage = (e) => {
+        e.preventDefault()
+        // this.props.refreshIndex()
         window.location.reload();
     }
 
@@ -14,7 +16,7 @@ class IndexSearch extends React.Component {
                 <button className="refresh" 
                 type="button"
                 value="refresh"
-                onClick={this.refreshPage}>
+                onClick={(e) => this.refreshPage(e)}>
                     Refresh</button>
             </div>
         );

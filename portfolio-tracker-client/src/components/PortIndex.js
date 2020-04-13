@@ -17,7 +17,8 @@ class PortIndex extends React.Component {
         allocation: [],
         portName: '',
         portPerformance: 0,
-        allocationObj: []
+        allocationObj: [],
+        currentPortfolio: []
     }
 
                     // Lifecycle //
@@ -44,10 +45,16 @@ class PortIndex extends React.Component {
         .then(data => this.setStocks(data))
     }
 
-    setStocks = (stocks) => {
+    setStocks = (portfolios) => {
+        if (this.props.userId != null) {
+        let currentPortfolios = portfolios.filter(portfolio => portfolio.user_id === this.props.userId)
+        let currentPortArray = []
+        currentPortArray.push(currentPortfolios[0])
         this.setState({
-            portfolioStocks: stocks
-        }, () => this.showPortfolio(this.state.portfolioStocks))
+            portfolioStocks: currentPortfolios,
+            currentPortfolio: currentPortArray
+        }, () => this.showPortfolio(this.state.currentPortfolio))
+        }
     }
 
                      // Fetch + Set Stocks //
@@ -67,11 +74,18 @@ class PortIndex extends React.Component {
                     // Match portfoliostocks to tickers //
                      //      + Set CurrentTickers      //
 
-    showPortfolio = (portfolioStocks) => {
+    showPortfolio = (portfolios) => {
+        if (portfolios === null) {
+            return 
+        }
+        // let portfolioStocks = []
+        // portfolioStocks = portfolios
+        console.log(this.state.currentPortfolio)
+
         let showStocks = []
-        let portName = portfolioStocks[1].name 
-        let stockIds = portfolioStocks[1].portfoliostocks.map(showStock => showStock.stock_id)
-        let stockAllocations = portfolioStocks[1].portfoliostocks.map(showStock => showStock.allocation)
+        let portName = portfolios[0].name 
+        let stockIds = portfolios[0].portfoliostocks.map(showStock => showStock.stock_id)
+        let stockAllocations = portfolios[0].portfoliostocks.map(showStock => showStock.allocation)
         let index = this.state.stockIndex
         stockIds.forEach(stockId => index.forEach(stock => {
             if (stockId === stock.id) {
@@ -93,7 +107,7 @@ class PortIndex extends React.Component {
         })
         this.setState({
             allocationObj: allocationObj
-        }, () => console.log(this.state.allocationObj))
+        })
     }
 
  
@@ -112,7 +126,7 @@ class PortIndex extends React.Component {
 
         // Fetch + Set portIndex, tickers from CurrentTickers //
 
-    fetchIndex() {
+    fetchIndex = () => {
         let url = this.fetchUrl()
         if (url === API_URL) {
             return 
@@ -147,8 +161,6 @@ class PortIndex extends React.Component {
         allocations.forEach(allocation => {
             allocationArray.push(allocation/100)
         })
-        console.log(allocationArray)
-        console.log(percentChangeArray)
         
         let i = 0
         let end = allocationArray.length - 1
@@ -170,7 +182,7 @@ class PortIndex extends React.Component {
         let finalChange = portPercentChange.toFixed(2) 
         this.setState({
             portPerformance: finalChange
-        }, () => console.log(this.state.portPerformance))
+        })
     }
  
                 // Further Functionality //
@@ -191,13 +203,87 @@ class PortIndex extends React.Component {
         }
     }
 
+    handlePortChange = (e) => {
+        let portString = e.target.innerText.split(' ')
+        let end = portString.length - 1   // HARDCODE EXCEPTIONS
+        let portfolios = this.state.portfolioStocks
+        let correctPort = []
+        if (end === 4) {
+            let string1 = portString[0]
+            let string2 = portString[1]
+            let string3 = portString[2]
+            let fullString = string1.concat(' ', string2)
+            fullString = fullString.concat(' ', string3)
+            console.log(fullString)
+            portfolios.forEach(portfolio => {
+                if (portfolio.name == fullString) {
+                    correctPort.push(portfolio)
+                }
+            console.log(correctPort)
+            this.setState({
+                currentPortfolio: correctPort
+            }, () => this.showPortfolio(this.state.currentPortfolio))
+            })
+        } if (end === 1) {
+            let i = 0
+            let fullString = portString[i] 
+            console.log(fullString)
+            portfolios.forEach(portfolio => {
+                if (portfolio.name == fullString) {
+                    correctPort.push(portfolio)
+                }
+            console.log(correctPort)
+            this.setState({
+                currentPortfolio: correctPort
+            }, () => this.showPortfolio(this.state.currentPortfolio))
+
+            
+            })
+            } if (end === 2 || end === 3) {
+            let i = 0
+            let string1 = portString[i]
+            let string2 = portString[i+1]
+            let fullString = string1.concat(' ', string2)
+            console.log(fullString)
+            portfolios.forEach(portfolio => {
+                if (portfolio.name == fullString) {
+                    correctPort.push(portfolio)
+                }
+            console.log(correctPort)
+            this.setState({
+                currentPortfolio: correctPort
+            }, () => this.showPortfolio(this.state.currentPortfolio))
+            })
+        }
+            // } if (end === 3) {
+        //     let i = 0
+        //     let string1 = portString[i]
+        //     let string2 = portString[i+1]
+        //     let string3 = portString[i+2]
+        //     let fullString = string1.concat(' ', string2)
+        //     fullString =  fullString.concat(' ', string3)
+        //     console.log(fullString)
+        // }
+        // let portfolios = this.state.portfolioStocks
+        // portfolios.forEach(portfolio => console.log(portfolio.name))
+    }
+
 
     render() {
+        if (this.state.portfolioStocks === [] || this.state.stockIndex === [] ) {
+            return null
+        }
+        let currentPortfolios = this.state.portfolioStocks
         let currentStocks = this.state.portIndex
         let currentAllocation = this.state.allocationObj
         return (
             <div className="Portindex">
-                <h3>{this.state.portName}</h3>
+                <div className="port-names">
+                {currentPortfolios.map(portfolio => (
+                    <span onClick={e => this.handlePortChange(e)}>{portfolio.name} | </span>
+                ))}
+                </div>
+                <h4>{this.state.portName}</h4>
                 <h4>Portfolio Daily Performance: {this.handlePerfPercentColor(this.state.portPerformance)}</h4>
                 <table className="Portindex-table">
                 <thead>
