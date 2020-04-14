@@ -53,12 +53,7 @@ class App extends React.Component {
   }
 
   loginRedirect = () => {
-    console.log('successfully logged in')
-    return (
-      <div>
-        {<Redirect to='/myportfolios' />}
-      </div>
-    )
+    history.push('/myportfolios')
   }
 
   signOut = () => {
@@ -66,6 +61,8 @@ class App extends React.Component {
       username: '',
       user_id: null
     })
+    history.push('/')
+    window.location.reload()
   }
 
   noUser = () => {

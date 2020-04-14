@@ -12,7 +12,6 @@ class IndexSearch extends React.Component {
     render() {
         return (
             <div className="index-search">
-                Index Search
                 <button className="refresh" 
                 type="button"
                 value="refresh"
