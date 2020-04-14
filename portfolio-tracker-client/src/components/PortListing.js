@@ -1,5 +1,6 @@
 import React from "react"
 import '../styling/HomeIndex.css';
+import { Table } from 'semantic-ui-react'
 
 const divGreen = { color: 'green' };
 const divRed = { color: 'red' };
@@ -51,13 +52,20 @@ class PortListing extends React.Component {
 
   render() {
     return (
-    <tr>
-       <td>{this.props.symbol}</td>
-       <td>{this.props.shortName}</td> 
-       <td>{this.handlePriceRounding(this.props.regularMarketPrice)}</td>
-       <td>{this.handlePerfChangeColor(this.props.regularMarketChange)}</td>
-       <td>{this.handlePerfPercentColor(this.props.regularMarketChangePercent)}</td>
-    </tr>
+    // <tr>
+    //    <td>{this.props.symbol}</td>
+    //    <td>{this.props.shortName}</td> 
+    //    <td>{this.handlePriceRounding(this.props.regularMarketPrice)}</td>
+    //    <td>{this.handlePerfChangeColor(this.props.regularMarketChange)}</td>
+    //    <td>{this.handlePerfPercentColor(this.props.regularMarketChangePercent)}</td>
+    // </tr>
+    <Table.Row>
+        <Table.Cell>{this.props.symbol}</Table.Cell>
+        <Table.Cell>{this.props.shortName}</Table.Cell>
+        <Table.Cell>{this.handlePriceRounding(this.props.regularMarketPrice)}</Table.Cell>
+        <Table.Cell>{this.handlePerfChangeColor(this.props.regularMarketChange)}</Table.Cell>
+        <Table.Cell>{this.handlePerfPercentColor(this.props.regularMarketChangePercent)}</Table.Cell>
+    </Table.Row>
     )
   }
 }

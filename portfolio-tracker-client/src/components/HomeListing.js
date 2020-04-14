@@ -1,5 +1,6 @@
 import React from "react"
 import '../styling/HomeIndex.css';
+import { Table } from 'semantic-ui-react'
 
 const divGreen = { color: 'green' };
 const divRed = { color: 'red' };
@@ -51,24 +52,19 @@ class HomeListing extends React.Component {
 
   render() {
     return (
-    <tr>
-      <td>{this.props.symbol}</td>
-      <td>{this.props.shortName}</td>
-      <td>{this.handlePriceRounding(this.props.regularMarketPrice)}</td>
-      <td>{this.handlePerfChangeColor(this.props.regularMarketChange)}</td>
-      <td>{this.handlePerfPercentColor(this.props.regularMarketChangePercent)}</td>
-      {/* <td><button 
-      type="button" 
-      className="btn btn-primary"
-    //   onClick={this.props.handleClick}
- //     value={this.props.pizza}
- //     datatopping={this.props.pizza.topping}
- //     datasize={this.props.pizza.size}
- //     dataveg={pizzaVeg}
- //     datakey={this.props.pizza.id}
-        >
-        Show</button></td>  */}
-    </tr>
+        <Table.Row>
+            <Table.Cell>{this.props.symbol}</Table.Cell>
+            <Table.Cell>{this.props.shortName}</Table.Cell>
+            <Table.Cell>{this.handlePriceRounding(this.props.regularMarketPrice)}</Table.Cell>
+            <Table.Cell>{this.handlePerfChangeColor(this.props.regularMarketChange)}</Table.Cell>
+            <Table.Cell>{this.handlePerfPercentColor(this.props.regularMarketChangePercent)}</Table.Cell>
+        </Table.Row>
+        
+    //   <td>{this.props.symbol}</td>
+    //   <td>{this.props.shortName}</td>
+    //   <td>{this.handlePriceRounding(this.props.regularMarketPrice)}</td>
+    //   <td>{this.handlePerfChangeColor(this.props.regularMarketChange)}</td>
+    //   <td>{this.handlePerfPercentColor(this.props.regularMarketChangePercent)}</td>
     )
   }
 }
