@@ -1,7 +1,9 @@
 import React from 'react';
 import '../styling/HomeIndex.css';
 
+
 class IndexSearch extends React.Component {
+
 
     refreshPage = (e) => {
         e.preventDefault()

@@ -6,11 +6,13 @@ import NavBar from './NavBar.js'
 class HomePage extends React.Component {
 
     state = {
-        indexStocks: []
+        indexStocks: [],
+        indexSummary: []
     }
 
     componentDidMount() {
         this.fetchStocks()
+        this.fetchIndices()
     }
 
     fetchStocks() {
@@ -24,6 +26,20 @@ class HomePage extends React.Component {
         .then(response => response.json())
         .then(data => this.setState({
             indexStocks: data.quoteResponse.result
+        }))
+    }
+
+    fetchIndices() {
+        fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-summary?region=US&lang=en", {
+	    "method": "GET",
+	    "headers": {
+		    "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+		    "x-rapidapi-key": "baf3ec0ef6msh64ec318991109bfp13cd0cjsn50b9c68a5706"
+	    }
+        })
+        .then(response => response.json())
+        .then(data => this.setState({
+            indexSummary: data.marketSummaryResponse.result
         }))
     }
 
@@ -54,8 +70,11 @@ class HomePage extends React.Component {
                 <NavBar username={this.props.username} 
                 noUser={this.props.noUser}
                 />
-                <IndexSearch refreshIndex={this.fetchStocks}/>
+                <IndexSearch refreshIndex={this.fetchStocks}
+                indexSummary={this.state.indexSummary}
+                />
                 <HomeIndex indexStocks={this.state.indexStocks}
+                indexSummary={this.state.indexSummary}
                 />
             </div>
         );

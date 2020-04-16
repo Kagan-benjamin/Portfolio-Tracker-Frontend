@@ -61,7 +61,7 @@ class Login extends React.Component {
                         
                         <label style={{fontSize: "30px"}}>
                         Password:
-                        <input onChange={(e) => {this.handlePasswordChange(e)}} value={this.state.loginPassword} type="text" name="password" style={{marginRight: '70px'}}/>
+                        <input onChange={(e) => {this.handlePasswordChange(e)}} value={this.state.loginPassword} type="password" name="password" style={{marginRight: '70px'}}/>
                         </label>
                     <br></br>
                         <Button  type="submit" value="Log-In" style={{width: "200px", height: '40px', fontSize: "22px"}}>Log In</Button>

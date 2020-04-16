@@ -1,7 +1,6 @@
 import React from 'react';
 import NavBar from './NavBar.js'
 import PortIndex from '../components/PortIndex.js'
-import PortSearch from '../components/PortSearch.js'
 
 class MyPortfolios extends React.Component {
 
@@ -26,11 +25,7 @@ class MyPortfolios extends React.Component {
                 <NavBar username={this.props.username} 
                 noUser={this.props.noUser}
                 />
-                {/* <PortSearch userId={this.props.userId} 
-                userPorts={this.props.userPorts}
-                /> */}
                 <PortIndex userId={this.props.userId} 
-                
                 />
             </div>
         );

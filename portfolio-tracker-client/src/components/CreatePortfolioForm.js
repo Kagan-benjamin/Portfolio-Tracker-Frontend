@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styling/PortIndex.css';
-let API_URL = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-quotes?region=US&lang=en&symbols="
+
 
 const initialState = {
     name: '',
@@ -13,7 +13,9 @@ const initialState = {
     ticker3: '',
     allocation3: 0,
     ticker4: '',
+    allocation4: 0,
     ticker5: '',
+    allocation5: 0,
     ticker6: '',
     ticker7: '',
     ticker8: '',
@@ -131,6 +133,22 @@ class CreatePortfolioForm extends React.Component {
         this.setState({ allocation3: e.target.value })
     }
 
+    handleTicker4 = e => {
+        this.setState({ ticker4: e.target.value })
+    }
+
+    handleAllocation4 = e => {
+        this.setState({ allocation4: e.target.value })
+    }
+
+    handleTicker5 = e => {
+        this.setState({ ticker5: e.target.value })
+    }
+
+    handleAllocation5 = e => {
+        this.setState({ allocation5: e.target.value })
+    }
+
     setNewPortId = data => {
         this.setState({
             newPortId: data.id
@@ -168,7 +186,6 @@ class CreatePortfolioForm extends React.Component {
     handleSubmit = e => {
         e.preventDefault()
         // FORMAT PORTFOLIOSTOCKS
-        let portArray = this.createPortfolioStocksArray(this.state.ticker1, this.state.ticker2, this.state.ticker3)
         let port = this.createNewPortfolio(this.state.name, this.state.user_id)
         let ticker1Id = this.ticker1Match(this.state.ticker1)
         let ticker2Id = this.ticker2Match(this.state.ticker2)
@@ -254,7 +271,20 @@ class CreatePortfolioForm extends React.Component {
 
                 <label className="allocation-label">Allocation: </label>
                 <input onChange={this.handleAllocation3} value={this.state.allocation3} name="allocation3" type="number" placeholder="add allocation (%)" />
+                <br></br>
 
+                <label className="ticker-label">Ticker: </label>
+                <input onChange={this.handleTicker4} value={this.state.ticker4} name="ticker4" type="text" placeholder="add ticker" />
+
+                <label className="allocation-label">Allocation: </label>
+                <input onChange={this.handleAllocation4} value={this.state.allocation4} name="allocation4" type="number" placeholder="add allocation (%)" />
+                <br></br>
+
+                <label className="ticker-label">Ticker: </label>
+                <input onChange={this.handleTicker5} value={this.state.ticker5} name="ticker5" type="text" placeholder="add ticker" />
+
+                <label className="allocation-label">Allocation: </label>
+                <input onChange={this.handleAllocation5} value={this.state.allocation5} name="allocation5" type="number" placeholder="add allocation (%)" />
                 <br></br>
 
                 <input type="submit" value="Add Portfolio" />

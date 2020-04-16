@@ -1,7 +1,7 @@
 import React from 'react';
 import './styling/App.css';
 import history from './utilities/history.js';
-import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import HomePage from './containers/HomePage.js'
 import MyPortfolios from './containers/MyPortfolios.js'
 import ShowPage from './containers/ShowPage.js'

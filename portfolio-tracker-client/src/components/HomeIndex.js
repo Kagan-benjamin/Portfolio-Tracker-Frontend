@@ -1,5 +1,4 @@
 import React from 'react';
-import HomeListing from './HomeListing.js';
 import { Table } from 'semantic-ui-react'
 import _ from 'lodash'
 import '../styling/HomeIndex.css';
@@ -13,16 +12,21 @@ class HomeIndex extends React.Component {
         column: null,
         data: null,
         direction: null,
-        indexStocks: []
+        indexStocks: [],
+        indexSummary: []
     }
 
     componentDidMount() {
         this.setIndex(this.props.indexStocks)
+        this.setSummary(this.props.indexSummary)
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.indexStocks !== prevProps.indexStocks) {
-        this.setIndex(this.props.indexStocks)
+            this.setIndex(this.props.indexStocks)
+        }
+        if (this.props.indexSummary !== prevProps.indexSummary) {
+            this.setSummary(this.props.indexSummary)
         }
     }
 
@@ -76,8 +80,14 @@ class HomeIndex extends React.Component {
         })
     }
 
+    setSummary = (indices) => {
+        this.setState({
+            indexSummary: indices
+        })
+    }
+
     handleSort = (clickedColumn) => () => {
-        const { column, data, direction } = this.state
+        const { column, data } = this.state
         let currentIndex = this.state.data.sort((a, b) => (a.regularMarketChangePercent < b.regularMarketChangePercent) ? 1 : -1)
         if (column !== clickedColumn) {
           this.setState({
@@ -101,7 +111,6 @@ class HomeIndex extends React.Component {
 
 
     render() {
-        let currentStocks = this.state.data
         const { column, data, direction } = this.state
         return (
                 <Table sortable striped>

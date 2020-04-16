@@ -2,6 +2,7 @@ import React from 'react';
 import PortListing from './PortListing.js';
 import PortAllocation from './PortAllocation.js';
 import CreatePortfolioForm from './CreatePortfolioForm.js';
+import { Table } from 'semantic-ui-react'
 import '../styling/PortIndex.css';
 let API_URL = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-quotes?region=US&lang=en&symbols="
 
@@ -279,15 +280,18 @@ class PortIndex extends React.Component {
     portTextToggle = () => {
         if (this.props.userId != null) {
             return (
-                <h4>
+                <h3>
                     Portfolio Daily Performance: {this.handlePerfPercentColor(this.state.portPerformance)}
-                </h4>
+                </h3>
             )
         } else {
             return (
-                <h2>
-                    Please sign in to view portfolios
-                </h2>
+                <div>
+                    <br></br><br></br>
+                    <h2 className="no-user-port-index">
+                        Please sign in to view portfolios
+                    </h2>
+                </div>
             )
         }
     }
@@ -295,9 +299,9 @@ class PortIndex extends React.Component {
     portTickerToggle = () => {
         if (this.props.userId != null) {
             return (
-                <th scope="col">
+                <Table.HeaderCell>
                     Ticker:
-                </th>
+                </Table.HeaderCell>
             )
         } else {
             return 
@@ -307,9 +311,9 @@ class PortIndex extends React.Component {
     portNameToggle = () => {
         if (this.props.userId != null) {
             return (
-                <th scope="col">
+                <Table.HeaderCell>
                     Name:
-                </th>
+                </Table.HeaderCell>
             )
         } else {
             return 
@@ -319,9 +323,9 @@ class PortIndex extends React.Component {
     portPriceToggle = () => {
         if (this.props.userId != null) {
             return (
-                <th scope="col">
+                <Table.HeaderCell>
                     Current Price:
-                </th>
+                </Table.HeaderCell>
             )
         } else {
             return 
@@ -331,9 +335,9 @@ class PortIndex extends React.Component {
     portDollarToggle = () => {
         if (this.props.userId != null) {
             return (
-                <th scope="col">
+                <Table.HeaderCell>
                     Daily $ Perf:
-                </th>
+                </Table.HeaderCell>
             )
         } else {
             return 
@@ -343,9 +347,9 @@ class PortIndex extends React.Component {
     portPercentToggle = () => {
         if (this.props.userId != null) {
             return (
-                <th scope="col">
+                <Table.HeaderCell>
                     Daily % Perf:
-                </th>
+                </Table.HeaderCell>
             )
         } else {
             return 
@@ -355,9 +359,9 @@ class PortIndex extends React.Component {
     portAllocationToggle = () => {
         if (this.props.userId != null) {
             return (
-                <th scope="col">
+                <Table.HeaderCell>
                     Allocation %:
-                </th>
+                </Table.HeaderCell>
             )
         } else {
             return 
@@ -368,10 +372,12 @@ class PortIndex extends React.Component {
         if (this.state.portfolioStocks === [] || this.state.stockIndex === [] ) {
             return null
         }
+
         let currentPortfolios = this.state.portfolioStocks
         let currentStocks = this.state.portIndex
         let currentAllocation = this.state.allocationObj
         if (this.props.userId != null) {
+            
         return (
             <div className="Portindex">
                 <CreatePortfolioForm addNewPortfolio={this.addNewPortfolio} userId={this.props.userId} stockIndex={this.state.stockIndex} />
@@ -380,40 +386,39 @@ class PortIndex extends React.Component {
                     <span onClick={e => this.handlePortChange(e)}>{portfolio.name} | </span>
                 ))}
                 </div>
-                <h4>{this.state.portName} <button>Delete Portfolio</button> </h4>
+                <h2>{this.state.portName} <button>Delete Portfolio</button> </h2>
                 {this.portTextToggle()}
                 {/* <h4>Portfolio Daily Performance: {this.handlePerfPercentColor(this.state.portPerformance)}</h4> */}
-                <table className="Portindex-table">
-                <thead>
-                <tr>
-                    {this.portTickerToggle()} 
-                    {/* <th scope="col">Ticker:</th> */}
-                    {this.portNameToggle()}
-                    {this.portPriceToggle()}
-                    {this.portDollarToggle()}
-                    {this.portPercentToggle()}
-                </tr>
-                </thead>
-                    <tbody>
+                <Table striped>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>{this.portTickerToggle()}</Table.HeaderCell>
+                            <Table.HeaderCell>{this.portNameToggle()}</Table.HeaderCell>
+                            <Table.HeaderCell>{this.portPriceToggle()}</Table.HeaderCell>
+                            <Table.HeaderCell>{this.portDollarToggle()}</Table.HeaderCell>
+                            <Table.HeaderCell>{this.portPercentToggle()}</Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
                         {currentStocks.map(stock => (
                             <PortListing key={stock.id} {...stock}
                             />
                         ))}
-                    </tbody>
-                </table>
-                <table className="allocation-table">
-                    <thead>
-                        <tr>
-                            {this.portAllocationToggle()}
-                        </tr>
-                    </thead>
-                    <tbody>
+                    </Table.Body>
+                </Table>
+                <Table striped>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>{this.portAllocationToggle()}</Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
                         {currentAllocation.map(allocation => (
                             <PortAllocation key={allocation.id} {...allocation}
                             />
                         ))}
-                    </tbody>
-                </table>
+                    </Table.Body>
+                </Table>
             </div>
         );
         } else {
