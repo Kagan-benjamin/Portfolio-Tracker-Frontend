@@ -49,7 +49,7 @@ class PortIndex extends React.Component {
                     // Fetch + Set Portfolios //
 
     fetchPortfolios() {
-        fetch("http://localhost:3000/portfolios/")
+        fetch("http://localhost:3004/portfolios/")
         .then(response => response.json())
         .then(data => this.setStocks(data))
     }
@@ -69,7 +69,7 @@ class PortIndex extends React.Component {
                      // Fetch + Set Stocks //
 
     fetchStocks() {
-        fetch("http://localhost:3000/stocks/")
+        fetch("http://localhost:3004/stocks/")
         .then(response => response.json())
         .then(data => this.setIndex(data))
     }
