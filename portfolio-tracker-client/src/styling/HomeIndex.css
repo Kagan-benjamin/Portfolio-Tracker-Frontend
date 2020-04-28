@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .Homepage {
     position: relative;
     background-position: center;
@@ -14,4 +15,34 @@
 .index-search {
     position: relative;
     text-align: center;
+=======
+.Homepage {
+    position: relative;
+    background-position: center;
+    text-align: left;
+}
+
+.Homeindex {
+    position: relative;
+    background-position: center;
+    text-align: center;
+    font-size: 150%;
+}
+
+.index-search {
+    position: relative;
+    text-align: center;
+}
+
+.port-username {
+    position: relative;
+    text-align: left;
+    margin: 2px;
+}
+
+.index-search {
+    position: relative;
+    text-align: center;
+    margin: 10px;
+>>>>>>> b4bcda925956fb7da427a22211f5887cf6b1ab8b
 }
