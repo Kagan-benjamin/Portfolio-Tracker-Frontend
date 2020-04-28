@@ -1,27 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import '../styling/HomeIndex.css';
-
-class IndexSearch extends React.Component {
-
-    refreshPage = () => {
-        window.location.reload();
-    }
-
-    render() {
-        return (
-            <div className="index-search">
-                Index Search
-                <button className="refresh" 
-                type="button"
-                value="refresh"
-                onClick={this.refreshPage}>
-                    Refresh</button>
-            </div>
-        );
-    }
-} 
-=======
 import React from 'react';
 import '../styling/HomeIndex.css';
 
@@ -47,5 +23,4 @@ class IndexSearch extends React.Component {
         );
     }
 } 
->>>>>>> b4bcda925956fb7da427a22211f5887cf6b1ab8b
 export default IndexSearch;

@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App.js';
-import { BrowserRouter as Router, Route } from "react-router-dom";
-
-ReactDOM.render(<Router><Route path='/' component={App} /></Router>, document.getElementById('root'));
-
-
-=======
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App.js';
@@ -22,4 +12,3 @@ document.head.appendChild(styleLink);
 ReactDOM.render(<Router><Route path='/' component={App} /></Router>, document.getElementById('root'));
 
 
->>>>>>> b4bcda925956fb7da427a22211f5887cf6b1ab8b

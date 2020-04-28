@@ -1,24 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import NavBar from './NavBar.js'
-import PortIndex from '../components/PortIndex.js'
-import PortSearch from '../components/PortSearch.js'
-
-class MyPortfolios extends React.Component {
-
-    render() {
-        return (
-            <div className="my-portfolios">
-                <NavBar username={this.props.username} 
-                noUser={this.props.noUser}
-                />
-                <PortSearch />
-                <PortIndex />
-            </div>
-        );
-    }
-} 
-=======
 import React from 'react';
 import NavBar from './NavBar.js'
 import PortIndex from '../components/PortIndex.js'
@@ -52,5 +31,4 @@ class MyPortfolios extends React.Component {
         );
     }
 } 
->>>>>>> b4bcda925956fb7da427a22211f5887cf6b1ab8b
 export default MyPortfolios;

@@ -1,24 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import HomeIndex from '../components/HomeIndex.js'
-import IndexSearch from '../components/IndexSearch.js'
-import NavBar from './NavBar.js'
-
-class HomePage extends React.Component {
-
-    render() {
-        return (
-            <div className="Homepage">
-                <NavBar username={this.props.username} 
-                noUser={this.props.noUser}
-                />
-                <IndexSearch />
-                <HomeIndex />
-            </div>
-        );
-    }
-} 
-=======
 import React from 'react';
 import HomeIndex from '../components/HomeIndex.js'
 import IndexSearch from '../components/IndexSearch.js'
@@ -101,5 +80,4 @@ class HomePage extends React.Component {
         );
     }
 } 
->>>>>>> b4bcda925956fb7da427a22211f5887cf6b1ab8b
 export default HomePage;
