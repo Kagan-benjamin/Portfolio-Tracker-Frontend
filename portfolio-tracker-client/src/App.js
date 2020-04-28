@@ -1,71 +1,61 @@
 import React from 'react';
 import './styling/App.css';
 import history from './utilities/history.js';
-import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import HomePage from './containers/HomePage.js'
 import MyPortfolios from './containers/MyPortfolios.js'
 import ShowPage from './containers/ShowPage.js'
 import Login from './containers/Login.js'
 import styled from "styled-components"
-
 class App extends React.Component {
-
   state =  {
     username: '',
+    user_id: null,
     users: []
   }
-
   componentDidMount() {
    this.fetchUsers()
   }
-
   fetchUsers() {
     fetch("http://localhost:3004/users/")
     .then(response => response.json())
     .then(data => this.setUsers(data))
   } 
-
   setUsers = (users) => {
     this.setState({
         users: users
-    }, () => console.log(this.state.users))
+    })
 }
-
   handleLogin = e => {
     e.preventDefault()
-    let correctArray = []
-    // console.log(e.target[0].value, e.target[1].value)
+    let correctToggle = false
     let users = this.state.users
     users.forEach(user => {
-      if (user.username === e.target[0].value && user.password == e.target[1].value) {
-        correctArray.push(user)
+      if (user.username === e.target[0].value && user.password === e.target[1].value) {
+        correctToggle = !correctToggle
         this.setState({
-          username: e.target[0].value
+          username: e.target[0].value,
+          user_id: user.id
         }, () => this.loginRedirect())
       } else {
         return
       }
     })
-    if (correctArray.length === 0) {
+    if (correctToggle === false) {
       console.log("Sorry, wrong username or password")
     } 
   }
-
   loginRedirect = () => {
-    console.log('successfully logged in')
-    return (
-      <div>
-        {<Redirect to='/myportfolios' />}
-      </div>
-    )
+    history.push('/myportfolios')
   }
-
   signOut = () => {
     this.setState({
-      username: ''
+      username: '',
+      user_id: null
     })
+    history.push('/')
+    window.location.reload()
   }
-
   noUser = () => {
     if (this.state.username === "") {
       return (
@@ -91,11 +81,9 @@ class App extends React.Component {
       )
     }
   }
-
   render() {
     
    
-
     return (
       <div className="App">
       <div>
@@ -106,14 +94,11 @@ class App extends React.Component {
           noUser={this.noUser}
           /> } />
           
-          {/* <Route exact path="/navbar"
-          render={(props) => <NavBar {...props} />} /> */}
-          
           <Route exact path="/myportfolios"
           render={(props) => <MyPortfolios {...props} username={this.state.username} 
+          userId={this.state.user_id} 
           noUser={this.noUser}
           /> } />
-
           <Route exact path="/showpage"
           render={(props) => <ShowPage {...props} username={this.state.username} 
           noUser={this.noUser}
@@ -123,7 +108,6 @@ class App extends React.Component {
           render={(props) => <Login {...props} username={this.state.username} 
           noUser={this.noUser} handleLogin={this.handleLogin}
           /> } />
-
         </Switch>
       </Router>
       </div>

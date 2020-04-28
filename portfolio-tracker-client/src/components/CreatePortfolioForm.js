@@ -155,7 +155,7 @@ class CreatePortfolioForm extends React.Component {
         })
     }
 
-    postPortfolio = data => fetch('http://localhost:3000/portfolios', {
+    postPortfolio = data => fetch('http://localhost:3004/portfolios', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -166,7 +166,7 @@ class CreatePortfolioForm extends React.Component {
     .then(resp => resp.json())
     .then(data => this.setNewPortId(data))
 
-    postPortfolioStocks = data => fetch('http://localhost:3000/portfoliostocks', {
+    postPortfolioStocks = data => fetch('http://localhost:3004/portfoliostocks', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
