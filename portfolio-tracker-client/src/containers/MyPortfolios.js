@@ -1,9 +1,23 @@
 import React from 'react';
 import NavBar from './NavBar.js'
 import PortIndex from '../components/PortIndex.js'
-import PortSearch from '../components/PortSearch.js'
 
 class MyPortfolios extends React.Component {
+
+    state = {
+        currentPorts: [],
+        user_id:  null
+    }
+
+    componentDidMount() {
+        this.setUser(this.props.userId)
+    }
+
+    setUser = user => {
+        this.setState({
+            user_id: user
+        }, () => console.log(this.state.user_id))
+    }
 
     render() {
         return (
@@ -11,8 +25,8 @@ class MyPortfolios extends React.Component {
                 <NavBar username={this.props.username} 
                 noUser={this.props.noUser}
                 />
-                <PortSearch />
-                <PortIndex />
+                <PortIndex userId={this.props.userId} 
+                />
             </div>
         );
     }

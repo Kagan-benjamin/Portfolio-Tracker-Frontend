@@ -32,7 +32,7 @@ class NavBar extends React.Component {
                     {this.props.noUser()}
                   
                     <Button><div><Link to="/myportfolios" style={{color: 'black'}}>My Portfolios</Link></div></Button>   
-                    <Button color="default" ><div><Link to="/login" style={{color: 'black'}}>Sign Up / Login</Link></div></Button>        
+                    <Button color="default" ><div><Link to="/login" style={{color: 'black'}}>Sign Up / Log In</Link></div></Button>        
                 </div>
                 </Nav>
               </Header>

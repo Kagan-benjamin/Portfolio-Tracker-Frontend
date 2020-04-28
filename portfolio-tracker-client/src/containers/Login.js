@@ -17,6 +17,14 @@ class Login extends React.Component {
         this.setState({ loginPassword: e.target.value })
     }
 
+    handleLoginSubmit = e => {
+        this.props.handleLogin(e)
+        this.setState({
+            loginName: '',
+            loginPassword: ''
+        })
+    }
+
     render() {
         
         const Button = styled.button`
@@ -41,7 +49,7 @@ class Login extends React.Component {
                 </div>
                 <div style={{textAlign: "center"}}>
                     
-                    <form onSubmit={(e) => {this.props.handleLogin(e)}}>
+                    <form onSubmit={(e) => {this.handleLoginSubmit(e)}}>
                         
                         <label style={{fontSize: "30px"}}>
                         Username:
@@ -53,7 +61,7 @@ class Login extends React.Component {
                         
                         <label style={{fontSize: "30px"}}>
                         Password:
-                        <input onChange={(e) => {this.handlePasswordChange(e)}} value={this.state.loginPassword} type="text" name="password" style={{marginRight: '70px'}}/>
+                        <input onChange={(e) => {this.handlePasswordChange(e)}} value={this.state.loginPassword} type="password" name="password" style={{marginRight: '70px'}}/>
                         </label>
                     <br></br>
                         <Button  type="submit" value="Log-In" style={{width: "200px", height: '40px', fontSize: "22px"}}>Log In</Button>

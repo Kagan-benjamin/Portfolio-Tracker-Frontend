@@ -1,5 +1,6 @@
 import React from "react"
 import '../styling/HomeIndex.css';
+import { Table } from 'semantic-ui-react'
 
 class PortAllocation extends React.Component {
 
@@ -9,9 +10,9 @@ class PortAllocation extends React.Component {
 
   render() {
     return (
-    <tr onClick={this.seeProps}>
-       <td>{this.props.allocation.toFixed(2)}</td>
-    </tr>
+    <Table.Row onClick={this.seeProps}>
+       <Table.Cell>{this.props.allocation.toFixed(2)}</Table.Cell>
+    </Table.Row>
     )
   }
 }

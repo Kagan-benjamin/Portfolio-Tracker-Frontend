@@ -1,6 +1,8 @@
 import React from 'react';
 import PortListing from './PortListing.js';
 import PortAllocation from './PortAllocation.js';
+import CreatePortfolioForm from './CreatePortfolioForm.js';
+import { Table } from 'semantic-ui-react'
 import '../styling/PortIndex.css';
 let API_URL = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-quotes?region=US&lang=en&symbols="
 
@@ -17,7 +19,8 @@ class PortIndex extends React.Component {
         allocation: [],
         portName: '',
         portPerformance: 0,
-        allocationObj: []
+        allocationObj: [],
+        currentPortfolio: []
     }
 
                     // Lifecycle //
@@ -35,6 +38,13 @@ class PortIndex extends React.Component {
 
         }
     }
+                    // Add new portfolio to state //
+    
+    addNewPortfolio = newPort => {
+        this.setState(prevState => ( {portfolioStocks: [...prevState.portfolioStocks, newPort], currentPortfolio: [newPort]} ))
+    }
+
+
 
                     // Fetch + Set Portfolios //
 
@@ -44,10 +54,16 @@ class PortIndex extends React.Component {
         .then(data => this.setStocks(data))
     }
 
-    setStocks = (stocks) => {
+    setStocks = (portfolios) => {
+        if (this.props.userId != null) {
+        let currentPortfolios = portfolios.filter(portfolio => portfolio.user_id === this.props.userId)
+        let currentPortArray = []
+        currentPortArray.push(currentPortfolios[0])
         this.setState({
-            portfolioStocks: stocks
-        }, () => this.showPortfolio(this.state.portfolioStocks))
+            portfolioStocks: currentPortfolios,
+            currentPortfolio: currentPortArray
+        }, () => this.showPortfolio(this.state.currentPortfolio))
+        }
     }
 
                      // Fetch + Set Stocks //
@@ -67,11 +83,18 @@ class PortIndex extends React.Component {
                     // Match portfoliostocks to tickers //
                      //      + Set CurrentTickers      //
 
-    showPortfolio = (portfolioStocks) => {
+    showPortfolio = (portfolios) => {
+        if (portfolios[0] === null) {
+            return 
+        }
+        // let portfolioStocks = []
+        // portfolioStocks = portfolios
+        console.log(this.state.currentPortfolio)
+
         let showStocks = []
-        let portName = portfolioStocks[1].name 
-        let stockIds = portfolioStocks[1].portfoliostocks.map(showStock => showStock.stock_id)
-        let stockAllocations = portfolioStocks[1].portfoliostocks.map(showStock => showStock.allocation)
+        let portName = portfolios[0].name 
+        let stockIds = portfolios[0].portfoliostocks.map(showStock => showStock.stock_id)
+        let stockAllocations = portfolios[0].portfoliostocks.map(showStock => showStock.allocation)
         let index = this.state.stockIndex
         stockIds.forEach(stockId => index.forEach(stock => {
             if (stockId === stock.id) {
@@ -93,7 +116,7 @@ class PortIndex extends React.Component {
         })
         this.setState({
             allocationObj: allocationObj
-        }, () => console.log(this.state.allocationObj))
+        })
     }
 
  
@@ -112,7 +135,7 @@ class PortIndex extends React.Component {
 
         // Fetch + Set portIndex, tickers from CurrentTickers //
 
-    fetchIndex() {
+    fetchIndex = () => {
         let url = this.fetchUrl()
         if (url === API_URL) {
             return 
@@ -147,8 +170,6 @@ class PortIndex extends React.Component {
         allocations.forEach(allocation => {
             allocationArray.push(allocation/100)
         })
-        console.log(allocationArray)
-        console.log(percentChangeArray)
         
         let i = 0
         let end = allocationArray.length - 1
@@ -170,7 +191,7 @@ class PortIndex extends React.Component {
         let finalChange = portPercentChange.toFixed(2) 
         this.setState({
             portPerformance: finalChange
-        }, () => console.log(this.state.portPerformance))
+        })
     }
  
                 // Further Functionality //
@@ -191,46 +212,222 @@ class PortIndex extends React.Component {
         }
     }
 
+    handlePortChange = (e) => {
+        let portString = e.target.innerText.split(' ')
+        let end = portString.length - 1   // HARDCODE EXCEPTIONS
+        let portfolios = this.state.portfolioStocks
+        let correctPort = []
+        if (end === 4) {
+            let string1 = portString[0]
+            let string2 = portString[1]
+            let string3 = portString[2]
+            let fullString = string1.concat(' ', string2)
+            fullString = fullString.concat(' ', string3)
+            console.log(fullString)
+            portfolios.forEach(portfolio => {
+                if (portfolio.name == fullString) {
+                    correctPort.push(portfolio)
+                }
+            console.log(correctPort)
+            this.setState({
+                currentPortfolio: correctPort
+            }, () => this.showPortfolio(this.state.currentPortfolio))
+            })
+        } if (end === 1) {
+            let i = 0
+            let fullString = portString[i] 
+            console.log(fullString)
+            portfolios.forEach(portfolio => {
+                if (portfolio.name == fullString) {
+                    correctPort.push(portfolio)
+                }
+            console.log(correctPort)
+            this.setState({
+                currentPortfolio: correctPort
+            }, () => this.showPortfolio(this.state.currentPortfolio))
+
+            
+            })
+            } if (end === 2 || end === 3) {
+            let i = 0
+            let string1 = portString[i]
+            let string2 = portString[i+1]
+            let fullString = string1.concat(' ', string2)
+            console.log(fullString)
+            portfolios.forEach(portfolio => {
+                if (portfolio.name == fullString) {
+                    correctPort.push(portfolio)
+                }
+            console.log(correctPort)
+            this.setState({
+                currentPortfolio: correctPort
+            }, () => this.showPortfolio(this.state.currentPortfolio))
+            })
+        }
+            // } if (end === 3) {
+        //     let i = 0
+        //     let string1 = portString[i]
+        //     let string2 = portString[i+1]
+        //     let string3 = portString[i+2]
+        //     let fullString = string1.concat(' ', string2)
+        //     fullString =  fullString.concat(' ', string3)
+        //     console.log(fullString)
+        // }
+        // let portfolios = this.state.portfolioStocks
+        // portfolios.forEach(portfolio => console.log(portfolio.name))
+    }
+
+    portTextToggle = () => {
+        if (this.props.userId != null) {
+            return (
+                <h3>
+                    Portfolio Daily Performance: {this.handlePerfPercentColor(this.state.portPerformance)}
+                </h3>
+            )
+        } else {
+            return (
+                <div>
+                    <br></br><br></br>
+                    <h2 className="no-user-port-index">
+                        Please sign in to view portfolios
+                    </h2>
+                </div>
+            )
+        }
+    }
+
+    portTickerToggle = () => {
+        if (this.props.userId != null) {
+            return (
+                <Table.HeaderCell>
+                    Ticker:
+                </Table.HeaderCell>
+            )
+        } else {
+            return 
+        }
+    }
+
+    portNameToggle = () => {
+        if (this.props.userId != null) {
+            return (
+                <Table.HeaderCell>
+                    Name:
+                </Table.HeaderCell>
+            )
+        } else {
+            return 
+        }
+    }
+
+    portPriceToggle = () => {
+        if (this.props.userId != null) {
+            return (
+                <Table.HeaderCell>
+                    Current Price:
+                </Table.HeaderCell>
+            )
+        } else {
+            return 
+        }
+    }
+
+    portDollarToggle = () => {
+        if (this.props.userId != null) {
+            return (
+                <Table.HeaderCell>
+                    Daily $ Perf:
+                </Table.HeaderCell>
+            )
+        } else {
+            return 
+        }
+    }
+
+    portPercentToggle = () => {
+        if (this.props.userId != null) {
+            return (
+                <Table.HeaderCell>
+                    Daily % Perf:
+                </Table.HeaderCell>
+            )
+        } else {
+            return 
+        }
+    }
+
+    portAllocationToggle = () => {
+        if (this.props.userId != null) {
+            return (
+                <Table.HeaderCell>
+                    Allocation %:
+                </Table.HeaderCell>
+            )
+        } else {
+            return 
+        }
+    }
 
     render() {
+        if (this.state.portfolioStocks === [] || this.state.stockIndex === [] ) {
+            return null
+        }
+
+        let currentPortfolios = this.state.portfolioStocks
         let currentStocks = this.state.portIndex
         let currentAllocation = this.state.allocationObj
+        if (this.props.userId != null) {
+            
         return (
             <div className="Portindex">
-                <h3>{this.state.portName}</h3>
-                <h4>Portfolio Daily Performance: {this.handlePerfPercentColor(this.state.portPerformance)}</h4>
-                <table className="Portindex-table">
-                <thead>
-                <tr>
-                    <th scope="col">Ticker:</th>
-                    <th scope="col">Name:</th>
-                    <th scope="col">Current Price:</th>
-                    <th scope="col">Daily $ Perf:</th>
-                    <th scope="col">Daily % Perf:</th>
-                </tr>
-                </thead>
-                    <tbody>
+                <CreatePortfolioForm addNewPortfolio={this.addNewPortfolio} userId={this.props.userId} stockIndex={this.state.stockIndex} />
+                <div className="port-names">
+                {currentPortfolios.map(portfolio => (
+                    <span onClick={e => this.handlePortChange(e)}>{portfolio.name} | </span>
+                ))}
+                </div>
+                <h2>{this.state.portName} <button>Delete Portfolio</button> </h2>
+                {this.portTextToggle()}
+                {/* <h4>Portfolio Daily Performance: {this.handlePerfPercentColor(this.state.portPerformance)}</h4> */}
+                <Table striped>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>{this.portTickerToggle()}</Table.HeaderCell>
+                            <Table.HeaderCell>{this.portNameToggle()}</Table.HeaderCell>
+                            <Table.HeaderCell>{this.portPriceToggle()}</Table.HeaderCell>
+                            <Table.HeaderCell>{this.portDollarToggle()}</Table.HeaderCell>
+                            <Table.HeaderCell>{this.portPercentToggle()}</Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
                         {currentStocks.map(stock => (
                             <PortListing key={stock.id} {...stock}
                             />
                         ))}
-                    </tbody>
-                </table>
-                <table className="allocation-table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Allocation %:</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    </Table.Body>
+                </Table>
+                <Table striped>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>{this.portAllocationToggle()}</Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
                         {currentAllocation.map(allocation => (
                             <PortAllocation key={allocation.id} {...allocation}
                             />
                         ))}
-                    </tbody>
-                </table>
+                    </Table.Body>
+                </Table>
             </div>
         );
+        } else {
+            return (
+                <div>
+                    {this.portTextToggle()}
+                </div>
+            )
+        }
     }
 } 
 export default PortIndex;

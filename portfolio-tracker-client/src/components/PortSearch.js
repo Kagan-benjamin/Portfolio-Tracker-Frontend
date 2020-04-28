@@ -7,10 +7,31 @@ class PortSearch extends React.Component {
         window.location.reload();
     }
 
+    handlePorts = () => {
+
+    }
+
+    handleUser = (userId) => {
+        if (userId === null) {
+            return (
+                <h3>
+                    Please log in to view portfolios
+                </h3>
+            )
+        } else {
+            return (
+                    <h3 className="port-username">
+                        User Id: {this.props.userId}
+                    </h3>   
+            )
+        }
+    }
+
     render() {
+        let loggedIn = this.props.userId
         return (
             <div className="port-search">
-                Portfolio Search
+                {this.handleUser(loggedIn)}
                 <button className="refresh" 
                 type="button"
                 value="refresh"

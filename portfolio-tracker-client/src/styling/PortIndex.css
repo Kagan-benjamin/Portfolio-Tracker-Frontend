@@ -15,3 +15,18 @@
     position: relative;
     text-align: center;
 }
+
+.port-names {
+    position: relative;
+    background-position: center;
+    text-align: center;
+    margin: 10px;
+}
+
+.no-user-port-index {
+    position: relative;
+    background-position: center;
+    text-align: center;
+    font-size: 250%;
+    margin: 10px;
+}
